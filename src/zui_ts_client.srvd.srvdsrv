@@ -1,0 +1,11 @@
+@EndUserText.label: 'Service Def'
+define service ZUI_TS_CLIENT {
+  expose ZC_TS_CLIENT;
+  expose zc_ts_project;
+  expose zc_ts_office;
+  expose ZC_TS_ACTIVITY;
+  expose ZC_TS_teams;
+  expose zc_ts_tasks;
+  expose zc_ts_employees;
+  expose zc_ts_empl_proj;
+}

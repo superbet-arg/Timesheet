@@ -1,0 +1,53 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Activity',
+                typeNamePlural: 'Activities',
+                title: { type: #STANDARD, label: 'Activity', value: 'ActivityID' } } }
+                
+annotate entity ZC_TS_TASKS
+    with 
+{
+
+  @UI.facet: [ { id:              'Activity',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Activity',
+                 position:        10 }]
+
+  @UI: {  lineItem:       [ { position: 10 } ],
+         identification: [ { position: 10, label: 'Task ID'  } ]  ,
+         selectionField: [ { position: 10 } ] }
+
+   TaskId;
+   
+     @UI.hidden: true
+   ClientId;
+   
+     @UI.hidden: true
+   ProjectId;
+
+  @UI: {  lineItem:       [ { position: 20 } ],
+      identification: [ { position: 20, label: 'Activity ID'  } ]  ,
+      selectionField: [ { position: 20 } ] }
+      
+   ActivityId;
+
+  @UI: {  lineItem:       [ { position: 30 } ],
+      identification: [ { position: 30, label: 'Description'  } ]  ,
+      selectionField: [ { position: 30 } ] }
+      
+   Description;
+ 
+   @UI: {  lineItem:       [ { position: 40 } ],
+      identification: [ { position: 40, label: 'Hours Estimated'  } ]  ,
+      selectionField: [ { position: 40 } ] }
+      
+   HoursEst;
+   
+     @UI: {  lineItem:       [ { position: 50 } ],
+      identification: [ { position: 50, label: 'Active'  } ]  ,
+      selectionField: [ { position: 50 } ] }
+      
+   Active;
+ 
+}

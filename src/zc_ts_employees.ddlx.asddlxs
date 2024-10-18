@@ -1,0 +1,41 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Employee',
+                typeNamePlural: 'Employees',
+                title: { type: #STANDARD, value: 'EmployeeID' } } }
+                
+annotate entity zc_ts_employees
+    with 
+{
+
+  @UI.facet: [ { id:            'Employee',
+                 purpose:       #STANDARD,
+                 type:          #IDENTIFICATION_REFERENCE,
+                 label:         'Employee',
+                 position:      10 }  ]
+                 
+     @UI: { lineItem:       [ { position: 10 } ],
+         identification: [ { position: 10, label: 'Employee ID'  } ]  ,
+         selectionField: [ { position: 10 } ] }    
+         
+EmployeeId;
+
+   @UI.hidden: true
+ClientId;
+
+     @UI: { lineItem:       [ { position: 20 } ],
+         identification: [ { position: 20, label: 'Name'  } ]  ,
+         selectionField: [ { position: 20 } ] }
+Name;
+
+     @UI: { lineItem:       [ { position: 40 } ],
+         identification: [ { position: 40, label: 'Active'  } ]  ,
+         selectionField: [ { position: 40 } ] }
+Active;
+
+     @UI: { lineItem:       [ { position: 30 } ],
+         identification: [ { position: 30, label: 'OfficeId'  } ]  ,
+         selectionField: [ { position: 30 } ] }
+OfficeId;
+    
+}

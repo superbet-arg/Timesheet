@@ -1,0 +1,84 @@
+projection;
+//strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for ZC_TS_CLIENT alias Client
+use etag
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Project { create; }
+  use association _Office { create; }
+  use association _Employees {create; }
+}
+
+define behavior for zc_ts_project alias Project
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Client;
+  use association _Activity {create;}
+  use association _Teams {create;}
+  use association _Tasks {create;}
+  use association _EmplProj {create;}
+}
+
+define behavior for zc_ts_office alias Office
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Client;
+}
+
+define behavior for zc_ts_activity alias Activity
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Project;
+  use association _Client;
+}
+
+define behavior for zc_ts_teams alias Teams
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Project;
+  use association _Client;
+}
+
+define behavior for zc_ts_tasks alias Tasks
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Project;
+  use association _Client;
+}
+
+define behavior for zc_ts_employees alias Employee
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Client;
+}
+
+define behavior for zc_ts_empl_proj alias EmplProj
+use etag
+{
+  use update;
+  use delete;
+
+  use association _Client;
+}

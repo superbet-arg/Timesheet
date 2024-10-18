@@ -1,0 +1,56 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Client',
+                typeNamePlural: 'Clients',
+                title: { type: #STANDARD, label: 'Client', value: 'ClientID' } } }
+
+
+annotate view ZC_TS_CLIENT with
+{
+
+  @UI.facet: [ { id:              'Client',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Client',
+                 position:        10 },
+               { id:              'Project',
+                 purpose:         #STANDARD,
+                 type:            #LINEITEM_REFERENCE,
+                 label:           'Project',
+                 position:        30,
+                 targetElement:   '_Project'}  ,
+               { id:              'Office',
+                 purpose:         #STANDARD,
+                 type:            #LINEITEM_REFERENCE,
+                 label:           'Office',
+                 position:        20,
+                 targetElement:   '_Office'},
+              { id:              'Employee',
+                 purpose:         #STANDARD,
+                 type:            #LINEITEM_REFERENCE,
+                 label:           'Employee',
+                 position:        40,
+                 targetElement:   '_Employees'}                
+  ]
+
+
+
+  @UI: {  lineItem:       [ { position: 10 } ],
+         identification: [ { position: 10, label: 'Client ID'  } ]  ,
+         selectionField: [ { position: 10 } ] }
+
+  ClientId;
+
+  @UI: {  lineItem:       [ { position: 20 } ],
+          identification: [ { position: 20, label: 'Description'  } ]  ,
+          selectionField: [ { position: 20 } ] }
+
+  ClientDesc;
+
+  @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30, label: 'Active'  } ]   ,
+          selectionField: [ { position: 30 } ] }
+  Active;
+
+
+}

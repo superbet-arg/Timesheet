@@ -1,0 +1,36 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Office',
+                typeNamePlural: 'Offices',
+                title: { type: #STANDARD, value: 'OfficeID' } } }
+
+annotate view zc_ts_office
+    with 
+{
+
+  @UI.facet: [ { id:            'Office',
+                 purpose:       #STANDARD,
+                 type:          #IDENTIFICATION_REFERENCE,
+                 label:         'Office',
+                 position:      10 }  ]
+                 
+     @UI: { lineItem:       [ { position: 10 } ],
+         identification: [ { position: 10, label: 'Office ID'  } ]  ,
+         selectionField: [ { position: 10 } ] }                 
+OfficeId;
+
+   @UI.hidden: true
+   
+ClientId;
+
+     @UI: { lineItem:       [ { position: 20 } ],
+         identification: [ { position: 20, label: 'Description'  } ]  ,
+         selectionField: [ { position: 20 } ] }
+Description;
+
+     @UI: { lineItem:       [ { position: 30 } ],
+         identification: [ { position: 30, label: 'Active'  } ]  ,
+         selectionField: [ { position: 30 } ] }
+Active;
+   
+}

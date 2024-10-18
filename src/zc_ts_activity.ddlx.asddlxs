@@ -1,0 +1,41 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Activity',
+                typeNamePlural: 'Activities',
+                title: { type: #STANDARD, label: 'Activity', value: 'ActivityID' } } }
+
+annotate view ZC_TS_ACTIVITY with
+{
+  @UI.facet: [ { id:              'Activity',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Activity',
+                 position:        10 }]
+
+  @UI: {  lineItem:       [ { position: 10 } ],
+         identification: [ { position: 10, label: 'Activity ID'  } ]  ,
+         selectionField: [ { position: 10 } ] }
+
+  ActivityId;
+
+  @UI.hidden: true
+
+  ClientId;
+
+  @UI.hidden: true
+
+  ProjectId;
+
+  @UI: {  lineItem:       [ { position: 20 } ],
+      identification: [ { position: 20, label: 'Description'  } ]  ,
+      selectionField: [ { position: 20 } ] }
+
+  Description;
+
+  @UI: {  lineItem:       [ { position: 30 } ],
+      identification: [ { position: 30, label: 'Active'  } ]  ,
+      selectionField: [ { position: 30 } ] }
+
+  Active;
+
+}

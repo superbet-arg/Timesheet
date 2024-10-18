@@ -1,0 +1,250 @@
+managed;
+
+//strict ( 2 );
+
+define behavior for zi_ts_client alias Client
+implementation in class zbp_i_ts_client unique
+persistent table ztts_client
+lock master
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) LastChangedAt, LastChangedBy, CreatedAt, CreatedBy, LocalLastChangedAt;
+
+  association _Project { create; }
+  association _Office { create; }
+  association _Employees { create; }
+
+  mapping for ztts_client
+    {
+      ClientId           = client_id;
+      ClientDesc         = client_desc;
+      Active             = active;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
+
+define behavior for ZI_TS_Project alias Project
+persistent table ztts_project
+lock dependent by _Client
+
+etag master LocalLastChangedAt
+//authorization dependent by _Client
+//etag master <field_name>
+{
+  update;
+  delete;
+
+  field ( readonly ) ClientId;
+
+  association _Client;
+  association _Activity { create; }
+  association _Teams { create; }
+  association _Tasks { create; }
+  association _EmplProj { create; }
+
+  mapping for ztts_project
+    {
+      ProjectId          = project_id;
+      ClientId           = client_id;
+      Description        = description;
+      Active             = active;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
+
+define behavior for ZI_TS_OFFICE alias Office
+persistent table ztts_office
+lock dependent by _Client
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) ClientId;
+
+  association _Client;
+
+  mapping for ztts_office
+    {
+      OfficeId           = office_id;
+      ClientId           = client_id;
+      Description        = description;
+      Active             = active;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
+
+
+define behavior for ZI_TS_activity alias Activity
+persistent table ztts_activity
+lock dependent by _Client
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) ClientId, ProjectID;
+
+  association _Client;
+  association _Project;
+
+
+  mapping for ztts_activity
+    {
+      ActivityId         = activity_id;
+      ClientId           = client_id;
+      ProjectId          = project_id;
+      Description        = description;
+      Active             = active;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
+
+define behavior for ZI_TS_teams alias Teams
+persistent table ztts_teams
+lock dependent by _Client
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) ClientId, ProjectID;
+
+  association _Client;
+  association _Project;
+
+
+  mapping for ztts_teams
+    {
+      TeamId             = Team_id;
+      ClientId           = client_id;
+      ProjectId          = project_id;
+      Description        = description;
+      Active             = active;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
+
+
+define behavior for zi_ts_tasks alias Tasks
+implementation in class zbp_i_ts_tasks unique
+persistent table ztts_tasks
+lock dependent by _Client
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) ClientId, ProjectID;
+
+  association _Client;
+  association _Project;
+
+//Validate that Activity exists and is active
+validation validateActivity on save { create; update; field ActivityID; }
+
+  mapping for ztts_tasks
+    {
+      TaskId             = task_id;
+      ClientId           = client_id;
+      ProjectId          = project_id;
+      ActivityId         = activity_id;
+      Description        = description;
+      HoursEst           = hours_est;
+      Active             = active;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
+
+
+define behavior for ZI_TS_EMPLOYEES alias Employees
+implementation in class zbp_i_ts_employees unique
+persistent table ztts_employees
+lock dependent by _Client
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  association _Client;
+
+  field ( readonly ) ClientId;
+  field ( mandatory ) EmployeeID, OfficeID;
+
+//Validate that Office exists and it's active'
+  validation validateOffice on save { create; update; field OfficeID; }
+
+  mapping for ztts_employees
+    {
+      EmployeeId         = employee_id;
+      ClientId           = client_id;
+      Name               = name;
+      Active             = active;
+      OfficeId           = office_id;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
+
+define behavior for ZI_TS_empl_proj alias EmplProj
+implementation in class zbp_i_ts_emplproj unique
+persistent table ztts_empl_proj
+lock dependent by _Client
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) ClientId, ProjectID;
+
+  association _Client;
+  association _Project;
+
+// Validate that employee exists and it's active
+  validation validateEmployee on save { create; update; field EmployeeID; }
+
+
+  mapping for ztts_empl_proj
+    {
+      EmployeeId         = employee_id;
+      ClientId           = client_id;
+      ProjectId          = project_id;
+      Active             = active;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}
