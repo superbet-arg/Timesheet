@@ -1,6 +1,6 @@
 managed;
 
-//strict ( 2 );
+// strict ( 2 );
 
 define behavior for zi_ts_client alias Client
 implementation in class zbp_i_ts_client unique
@@ -65,6 +65,7 @@ etag master LocalLastChangedAt
 }
 
 define behavior for ZI_TS_OFFICE alias Office
+implementation in class zbp_i_ts_office unique
 persistent table ztts_office
 lock dependent by _Client
 etag master LocalLastChangedAt
@@ -73,6 +74,8 @@ etag master LocalLastChangedAt
   delete;
 
   field ( readonly ) ClientId;
+
+  determination setActive on modify { create; }
 
   association _Client;
 
@@ -92,6 +95,7 @@ etag master LocalLastChangedAt
 
 
 define behavior for ZI_TS_activity alias Activity
+implementation in class zbp_i_ts_activity unique
 persistent table ztts_activity
 lock dependent by _Client
 etag master LocalLastChangedAt
@@ -104,6 +108,7 @@ etag master LocalLastChangedAt
   association _Client;
   association _Project;
 
+  determination setActive on modify { create; }
 
   mapping for ztts_activity
     {
@@ -121,6 +126,7 @@ etag master LocalLastChangedAt
 }
 
 define behavior for ZI_TS_teams alias Teams
+implementation in class zbp_i_ts_teams unique
 persistent table ztts_teams
 lock dependent by _Client
 etag master LocalLastChangedAt
@@ -129,6 +135,8 @@ etag master LocalLastChangedAt
   delete;
 
   field ( readonly ) ClientId, ProjectID;
+
+determination setActive on modify { create; }
 
   association _Client;
   association _Project;
@@ -166,6 +174,7 @@ etag master LocalLastChangedAt
 
 //Validate that Activity exists and is active
 validation validateActivity on save { create; update; field ActivityID; }
+determination setActive on modify { create; }
 
   mapping for ztts_tasks
     {
@@ -201,6 +210,7 @@ etag master LocalLastChangedAt
 
 //Validate that Office exists and it's active'
   validation validateOffice on save { create; update; field OfficeID; }
+determination setActive on modify { create; }
 
   mapping for ztts_employees
     {
@@ -233,7 +243,7 @@ etag master LocalLastChangedAt
 
 // Validate that employee exists and it's active
   validation validateEmployee on save { create; update; field EmployeeID; }
-
+determination setActive on modify { create; }
 
   mapping for ztts_empl_proj
     {

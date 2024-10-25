@@ -3,6 +3,8 @@ CLASS lhc_Employees DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS validateOffice FOR VALIDATE ON SAVE
       IMPORTING keys FOR Employees~validateOffice.
+    METHODS setActive FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR Employees~setActive.
 
 ENDCLASS.
 
@@ -91,6 +93,26 @@ CLASS lhc_Employees IMPLEMENTATION.
       ENDIF.
 
     ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD setActive.
+
+     READ ENTITIES OF Zi_ts_client IN LOCAL MODE
+  ENTITY Employees
+    FIELDS ( Active )
+    WITH CORRESPONDING #( keys )
+  RESULT DATA(Employees).
+
+ MODIFY ENTITIES OF Zi_ts_client IN LOCAL MODE
+   ENTITY Employees
+     UPDATE FIELDS ( Active )
+     WITH VALUE #( FOR Employeesi IN Employees  ( %tky          = Employeesi-%tky
+                                           Active = 'X' ) )
+ REPORTED DATA(update_reported).
+
+ "Set the changing parameter
+ reported = CORRESPONDING #( DEEP update_reported ).
 
   ENDMETHOD.
 

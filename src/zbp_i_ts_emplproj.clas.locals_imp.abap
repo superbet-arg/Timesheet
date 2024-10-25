@@ -3,6 +3,8 @@ CLASS lhc_EmplProj DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS validateEmployee FOR VALIDATE ON SAVE
       IMPORTING keys FOR EmplProj~validateEmployee.
+    METHODS setActive FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR EmplProj~setActive.
 
 ENDCLASS.
 
@@ -95,6 +97,26 @@ CLASS lhc_EmplProj IMPLEMENTATION.
   ENDLOOP.
 
 
+
+  ENDMETHOD.
+
+  METHOD setActive.
+
+     READ ENTITIES OF Zi_ts_client IN LOCAL MODE
+  ENTITY EmplProj
+    FIELDS ( Active )
+    WITH CORRESPONDING #( keys )
+  RESULT DATA(EmplProj).
+
+ MODIFY ENTITIES OF Zi_ts_client IN LOCAL MODE
+   ENTITY EmplProj
+     UPDATE FIELDS ( Active )
+     WITH VALUE #( FOR EmplProji IN EmplProj  ( %tky          = EmplProji-%tky
+                                           Active = 'X' ) )
+ REPORTED DATA(update_reported).
+
+ "Set the changing parameter
+ reported = CORRESPONDING #( DEEP update_reported ).
 
   ENDMETHOD.
 
