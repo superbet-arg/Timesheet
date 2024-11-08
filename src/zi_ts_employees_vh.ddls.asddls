@@ -1,6 +1,7 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
 @EndUserText.label: 'Employees VH'
 @Consumption.valueHelpDefault.fetchValues: #AUTOMATICALLY_WHEN_DISPLAYED
+
 define view entity ZI_TS_EMPLOYEES_VH as select from ztts_employees
 {
     key employee_id as EmployeeId,

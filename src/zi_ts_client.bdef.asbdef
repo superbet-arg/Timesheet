@@ -1,22 +1,46 @@
 managed;
-
-// strict ( 2 );
-
+strict ( 2 );
+with draft;
 define behavior for zi_ts_client alias Client
 implementation in class zbp_i_ts_client unique
 persistent table ztts_client
-lock master
+draft table ztts_client_d
 etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master ( global )
+
 {
+
+  field ( mandatory : create )
+  ClientId;
+
+  field ( readonly )
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt,
+  LocalLastChangedAt;
+
+  field ( readonly : update )
+  ClientId;
+
   create;
   update;
   delete;
 
-  field ( readonly ) LastChangedAt, LastChangedBy, CreatedAt, CreatedBy, LocalLastChangedAt;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
 
-  association _Project { create; }
-  association _Office { create; }
-  association _Employees { create; }
+  //  association _Project { create; }
+  //  association _Office { create; }
+  //  association _Employees { create; }
+
+  association _Project { create; with draft; } // BET
+  association _Office { create; with draft; } // BET
+  association _Employees { create; with draft; } // BET
 
   mapping for ztts_client
     {
@@ -31,24 +55,37 @@ etag master LocalLastChangedAt
     }
 }
 
+
 define behavior for ZI_TS_Project alias Project
 persistent table ztts_project
+draft table ztts_project_d
 lock dependent by _Client
-
 etag master LocalLastChangedAt
-//authorization dependent by _Client
-//etag master <field_name>
+authorization dependent by _Client
+
 {
   update;
   delete;
 
   field ( readonly ) ClientId;
 
-  association _Client;
-  association _Activity { create; }
-  association _Teams { create; }
-  association _Tasks { create; }
-  association _EmplProj { create; }
+  //  association _Client;
+  //  association _Activity { create; }
+  //  association _Teams { create; }
+  //  association _Tasks { create; }
+  //  association _EmplProj { create; }
+
+  association _Client { with draft; } // BET
+  association _Activity { create; with draft; } // BET
+  association _Teams { create; with draft; } // BET
+  association _Tasks { create; with draft; } // BET
+  association _EmplProj { create; with draft; } // BET
+
+  //  draft action Activate optimized;
+  //  draft action Discard;
+  //  draft action Edit;
+  //  draft action Resume;
+  //  draft determine action Prepare;
 
   mapping for ztts_project
     {
@@ -67,17 +104,23 @@ etag master LocalLastChangedAt
 define behavior for ZI_TS_OFFICE alias Office
 implementation in class zbp_i_ts_office unique
 persistent table ztts_office
+draft table ztts_office_d
 lock dependent by _Client
 etag master LocalLastChangedAt
+authorization dependent by _Client
+
 {
   update;
   delete;
 
   field ( readonly ) ClientId;
 
+  //side effects { field Active affects field Active, messages; }
+
   determination setActive on modify { create; }
 
-  association _Client;
+  //  association _Client;
+  association _Client { with draft; } // BET
 
   mapping for ztts_office
     {
@@ -97,16 +140,21 @@ etag master LocalLastChangedAt
 define behavior for ZI_TS_activity alias Activity
 implementation in class zbp_i_ts_activity unique
 persistent table ztts_activity
+draft table ztts_activity_d
 lock dependent by _Client
 etag master LocalLastChangedAt
+authorization dependent by _Client
 {
   update;
   delete;
 
   field ( readonly ) ClientId, ProjectID;
 
-  association _Client;
-  association _Project;
+  //  association _Client;
+  //  association _Project;
+
+  association _Client { with draft; } // BET
+  association _Project { with draft; } // BET
 
   determination setActive on modify { create; }
 
@@ -128,19 +176,23 @@ etag master LocalLastChangedAt
 define behavior for ZI_TS_teams alias Teams
 implementation in class zbp_i_ts_teams unique
 persistent table ztts_teams
+draft table ztts_teams_d
 lock dependent by _Client
 etag master LocalLastChangedAt
+authorization dependent by _Client
 {
   update;
   delete;
 
   field ( readonly ) ClientId, ProjectID;
 
-determination setActive on modify { create; }
+  determination setActive on modify { create; }
 
-  association _Client;
-  association _Project;
+  //  association _Client;
+  //  association _Project;
 
+  association _Client { with draft; } // BET
+  association _Project { with draft; } // BET
 
   mapping for ztts_teams
     {
@@ -161,20 +213,27 @@ determination setActive on modify { create; }
 define behavior for zi_ts_tasks alias Tasks
 implementation in class zbp_i_ts_tasks unique
 persistent table ztts_tasks
+draft table ztts_tasks_d
 lock dependent by _Client
 etag master LocalLastChangedAt
+authorization dependent by _Client
 {
   update;
   delete;
 
   field ( readonly ) ClientId, ProjectID;
 
-  association _Client;
-  association _Project;
+  //  association _Client;
+  //  association _Project;
 
-//Validate that Activity exists and is active
-validation validateActivity on save { create; update; field ActivityID; }
-determination setActive on modify { create; }
+  association _Client { with draft; } // BET
+  association _Project { with draft; } // BET
+
+  //Validate that Activity exists and is active
+  validation validateActivity on save  { create; update; field ActivityID; }
+  determination setActive on modify { create; }
+
+
 
   mapping for ztts_tasks
     {
@@ -197,28 +256,34 @@ determination setActive on modify { create; }
 define behavior for ZI_TS_EMPLOYEES alias Employees
 implementation in class zbp_i_ts_employees unique
 persistent table ztts_employees
+draft table ztts_employees_d
 lock dependent by _Client
 etag master LocalLastChangedAt
+authorization dependent by _Client
 {
   update;
   delete;
 
-  association _Client;
+  //  association _Client;
+
+  association _Client { with draft; } // BET
 
   field ( readonly ) ClientId;
   field ( mandatory ) EmployeeID, OfficeID;
 
-//Validate that Office exists and it's active'
+  //Validate that Office exists and it's active'
   validation validateOffice on save { create; update; field OfficeID; }
-determination setActive on modify { create; }
+  determination setActive on modify { create; }
+
 
   mapping for ztts_employees
     {
       EmployeeId         = employee_id;
       ClientId           = client_id;
       Name               = name;
-      Active             = active;
       OfficeId           = office_id;
+      HoursDay           = hours_day;
+      Active             = active;
       CreatedBy          = created_by;
       CreatedAt          = created_at;
       LastChangedBy      = last_changed_by;
@@ -230,20 +295,25 @@ determination setActive on modify { create; }
 define behavior for ZI_TS_empl_proj alias EmplProj
 implementation in class zbp_i_ts_emplproj unique
 persistent table ztts_empl_proj
+draft table ztts_empl_proj_d
 lock dependent by _Client
 etag master LocalLastChangedAt
+authorization dependent by _Client
 {
   update;
   delete;
 
   field ( readonly ) ClientId, ProjectID;
 
-  association _Client;
-  association _Project;
+  //  association _Client;
+  //  association _Project;
 
-// Validate that employee exists and it's active
+  association _Client { with draft; } // BET
+  association _Project { with draft; } // BET
+
+  // Validate that employee exists and it's active
   validation validateEmployee on save { create; update; field EmployeeID; }
-determination setActive on modify { create; }
+  determination setActive on modify { create; }
 
   mapping for ztts_empl_proj
     {

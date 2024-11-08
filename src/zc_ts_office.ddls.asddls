@@ -1,5 +1,5 @@
 @EndUserText.label: 'Office Projection View'
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
 @Search.searchable: true
 @Metadata.allowExtensions: true
 define view entity zc_ts_office as projection on ZI_TS_OFFICE

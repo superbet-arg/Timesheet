@@ -1,5 +1,6 @@
 @EndUserText.label: 'Office Interface View'
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
  
 define view entity ZI_TS_OFFICE
   as select from ztts_office

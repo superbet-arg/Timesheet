@@ -1,4 +1,5 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
 @EndUserText.label: 'Employees Project Assig Interf Project'
 
 define view entity ZI_TS_empl_proj

@@ -1,5 +1,5 @@
 @EndUserText.label: 'Tasks Projection View'
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
 @Search.searchable: true
 @Metadata.allowExtensions: true
 define view entity zc_ts_tasks

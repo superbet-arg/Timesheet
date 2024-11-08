@@ -1,5 +1,5 @@
 @EndUserText.label: 'Activity Projection View'
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
 @Search.searchable: true
 @Metadata.allowExtensions: true
 define view entity ZC_TS_ACTIVITY

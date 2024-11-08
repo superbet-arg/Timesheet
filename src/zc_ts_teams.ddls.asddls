@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
 @EndUserText.label: 'Teams Projection View'
 @Search.searchable: true
 @Metadata.allowExtensions: true

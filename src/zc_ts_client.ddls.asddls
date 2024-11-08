@@ -1,8 +1,10 @@
 @EndUserText.label: 'Client Projection View'
 @Search.searchable: true
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
 @Metadata.allowExtensions: true
-define root view entity ZC_TS_CLIENT as projection on zi_ts_client as Clients
+define root view entity ZC_TS_CLIENT 
+  provider contract transactional_query
+as projection on zi_ts_client as Clients
 {
     key ClientId,
     @Search.defaultSearchElement: true

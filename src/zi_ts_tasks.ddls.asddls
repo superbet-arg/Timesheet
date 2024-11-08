@@ -1,4 +1,5 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
 @EndUserText.label: 'Tasks Interface view'
 
 define view entity zi_ts_tasks

@@ -1,4 +1,5 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
 @EndUserText.label: 'Teams Interface View'
 
 define view entity ZI_TS_teams

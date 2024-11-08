@@ -1,4 +1,5 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
 @EndUserText.label: 'Project Interface View'
 
 define view entity ZI_TS_Project

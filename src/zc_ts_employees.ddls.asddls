@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
 @EndUserText.label: 'Employees Projection View'
 @Search.searchable: true
 @Metadata.allowExtensions: true
@@ -11,14 +11,16 @@ define view entity zc_ts_employees
       @Search.defaultSearchElement: true
       Name,
       @Search.defaultSearchElement: true
-      Active,
-     @Search.defaultSearchElement: true
       OfficeId,
+      @Search.defaultSearchElement: true
+      HoursDay,
+      @Search.defaultSearchElement: true
+      Active,
       CreatedBy,
-CreatedAt,
-LastChangedBy,
-LastChangedAt,
-LocalLastChangedAt,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
+      LocalLastChangedAt,
 
       /* Associations */
       _Client : redirected to parent ZC_TS_CLIENT,

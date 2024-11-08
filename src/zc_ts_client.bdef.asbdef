@@ -1,5 +1,6 @@
 projection;
-//strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+use draft; // BET
 
 define behavior for ZC_TS_CLIENT alias Client
 use etag
@@ -11,6 +12,17 @@ use etag
   use association _Project { create; }
   use association _Office { create; }
   use association _Employees {create; }
+
+//  use association _Project { create; with draft; } // BET
+//  use association _Office { create; with draft; } // BET
+//  use association _Employees {create; with draft; } // BET
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
 }
 
 define behavior for zc_ts_project alias Project
@@ -19,11 +31,18 @@ use etag
   use update;
   use delete;
 
-  use association _Client;
-  use association _Activity {create;}
-  use association _Teams {create;}
-  use association _Tasks {create;}
-  use association _EmplProj {create;}
+//  use association _Client;
+//  use association _Activity {create;}
+//  use association _Teams {create;}
+//  use association _Tasks {create;}
+//  use association _EmplProj {create;}
+
+  use association _Client { with draft; } // BET
+  use association _Activity { create; with draft; } // BET
+  use association _Teams { create; with draft; } // BET
+  use association _Tasks { create; with draft; } // BET
+  use association _EmplProj { create; with draft; } // BET
+
 }
 
 define behavior for zc_ts_office alias Office
@@ -32,7 +51,8 @@ use etag
   use update;
   use delete;
 
-  use association _Client;
+//  use association _Client;
+  use association _Client { with draft; } // BET
 }
 
 define behavior for zc_ts_activity alias Activity
@@ -43,6 +63,9 @@ use etag
 
   use association _Project;
   use association _Client;
+
+//    use association _Project { with draft; } // BET
+//  use association _Client { with draft; } // BET
 }
 
 define behavior for zc_ts_teams alias Teams
@@ -53,6 +76,9 @@ use etag
 
   use association _Project;
   use association _Client;
+
+//    use association _Project { with draft; } // BET
+//  use association _Client { with draft; } // BET
 }
 
 define behavior for zc_ts_tasks alias Tasks
@@ -61,8 +87,11 @@ use etag
   use update;
   use delete;
 
-  use association _Project;
-  use association _Client;
+//  use association _Project;
+//  use association _Client;
+
+    use association _Project { with draft; } // BET
+  use association _Client { with draft; } // BET
 }
 
 define behavior for zc_ts_employees alias Employee
@@ -71,7 +100,10 @@ use etag
   use update;
   use delete;
 
-  use association _Client;
+
+//  use association _Client;
+
+  use association _Client { with draft; } // BET
 }
 
 define behavior for zc_ts_empl_proj alias EmplProj
@@ -80,5 +112,8 @@ use etag
   use update;
   use delete;
 
-  use association _Client;
+    use association _Project { with draft; } // BET
+//  use association _Client;
+
+  use association _Client { with draft; } // BET
 }

@@ -1,4 +1,5 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
 @EndUserText.label: 'Activity interface View'
 
 define view entity ZI_TS_activity

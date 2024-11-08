@@ -1,12 +1,7 @@
-@AbapCatalog.viewEnhancementCategory: [#NONE]
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
 @EndUserText.label: 'Overtime Interface View'
-@Metadata.ignorePropagatedAnnotations: true
-@ObjectModel.usageType:{
-    serviceQuality: #X,
-    sizeCategory: #S,
-    dataClass: #MIXED
-}
+
 define view entity ZI_TS_Overtime as select from ztts_overtime as Overtime
 
 //association [1..1] to zi_ts_hours as _Hours on $projection.EntryId = _Hours.EntryId

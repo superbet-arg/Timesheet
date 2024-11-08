@@ -1,12 +1,7 @@
-@AbapCatalog.viewEnhancementCategory: [#NONE]
-@AccessControl.authorizationCheck: #NOT_REQUIRED
+@AccessControl.authorizationCheck: #CHECK
+@Metadata.allowExtensions: true
 @EndUserText.label: 'Hours Interface View'
-@Metadata.ignorePropagatedAnnotations: true
-@ObjectModel.usageType:{
-    serviceQuality: #X,
-    sizeCategory: #S,
-    dataClass: #MIXED
-}
+
 define view entity zi_ts_hours as select from ztts_hours as Hours
 
 //association [1..1] to ZI_TS_employees as _Employee on $projection.EmployeeId = _Employee.EmployeeId
