@@ -1,4 +1,5 @@
 @EndUserText.label: 'Service Def'
+@ObjectModel.leadingEntity.name: 'ZC_TS_CLIENT'
 define service ZUI_TS_CLIENT {
   expose ZC_TS_CLIENT;
   expose zc_ts_project;
